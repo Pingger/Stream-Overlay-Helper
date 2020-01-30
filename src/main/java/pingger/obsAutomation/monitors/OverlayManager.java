@@ -103,7 +103,7 @@ public class OverlayManager implements Monitor
 			}
 		});
 		btn_editPM = new JButton("Edit Mappings");
-		btn_editPM.addActionListener(e -> mapping.showEditGUI(false));
+		btn_editPM.addActionListener(e -> new MappingEditor(mapping));
 		pan.add(btn_savePM);
 		pan.add(btn_loadPM);
 		pan.add(btn_editPM);
