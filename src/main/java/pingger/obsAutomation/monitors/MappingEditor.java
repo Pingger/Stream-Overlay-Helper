@@ -136,9 +136,7 @@ public class MappingEditor extends JFrame
 		setTitle("Mapping Editor - " + m.getDisplayString());
 		Mapping selected = subs.getSelectedValue();
 		Mapping[] listData = m.getSubMappings().toArray(new Mapping[0]);
-		System.out.println(m.getSubMappings().size());
 		Arrays.sort(listData, (o1, o2) -> o1.getDisplayString().compareTo(o2.getDisplayString()));
-		System.out.println(Arrays.toString(listData));
 		subs.setListData(listData);
 		subs.setSelectedValue(selected, true);
 		editPanel.removeAll();
