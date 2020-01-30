@@ -192,7 +192,7 @@ public class PixelMapping implements Mapping
 	/**
 	 * the target state or null if no state change e.g. condition for other states
 	 */
-	public OverlayManager.State		state					= State.NO_CHANGE;
+	public OverlayManager.State			state					= State.NO_CHANGE;
 	/** the submappings */
 	public final Set<Mapping>			subMappings;
 	/** the x position of the pixel */
@@ -301,8 +301,14 @@ public class PixelMapping implements Mapping
 	@Override
 	public void setLabel(String label)
 	{
-		// TODO Auto-generated method stub
-
+		if (label == null)
+		{
+			label = "";
+		}
+		else
+		{
+			this.label = label;
+		}
 	}
 
 	/**
@@ -331,8 +337,11 @@ public class PixelMapping implements Mapping
 			 * right controls
 			 */
 			JButton add = new JButton("Add Mapping");
+			add.setBackground(new Color(0, 255, 0, 128));
 			JButton edit = new JButton("Edit Selected Mapping");
+			edit.setBackground(new Color(255, 255, 0, 128));
 			JButton remove = new JButton("Remove Selected Mapping");
+			remove.setBackground(new Color(255, 0, 0, 128));
 			JButton refresh = new JButton("Refresh View");
 			JButton close = new JButton("Close");
 			JTextArea notice = new JTextArea("Below shows/edits this Mapping, not the selected one on the left!");
