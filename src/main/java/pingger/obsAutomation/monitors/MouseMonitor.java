@@ -26,6 +26,11 @@ public class MouseMonitor implements Runnable
 			while (keepRunning)
 			{
 				PointerInfo pi = MouseInfo.getPointerInfo();
+				if (pi == null)
+				{
+					Thread.sleep(100);
+					continue;
+				}
 				Main.pm.onMouseMonitor(pi);
 				Point p = pi.getLocation();
 				if (p == null)
