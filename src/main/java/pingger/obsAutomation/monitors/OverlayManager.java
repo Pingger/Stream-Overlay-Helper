@@ -24,6 +24,7 @@ import pingger.obsAutomation.Main;
 
 public class OverlayManager implements Monitor
 {
+	public static JFrame		frm					= null;
 	private JButton				btn_editPM;
 	private JButton				btn_faded;
 	private JButton				btn_loadPM;
@@ -38,7 +39,9 @@ public class OverlayManager implements Monitor
 
 	public OverlayManager()
 	{
-		JFrame frm = new JFrame("Player.me Overlay");
+		if (frm != null)
+		{ throw new IllegalStateException("Only one OverlayManager is allowed!"); }
+		frm = new JFrame("Player.me Overlay");
 		JPanel pan = new JPanel(new GridLayout(0, 2));
 		frm.setContentPane(pan);
 		for (State s : State.values())

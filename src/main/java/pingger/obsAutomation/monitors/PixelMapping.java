@@ -40,11 +40,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import pingger.obsAutomation.monitors.OverlayManager.State;
+import pingger.obsAutomation.util.ColorSelector;
 
 /**
  *
@@ -202,8 +204,12 @@ public class PixelMapping implements Mapping
 
 	private transient ActionListener	al_refresh				= null;
 	private transient java.awt.Window	colorSelector			= null;
+	private transient ColorSelector		colorSelector2			= null;
 	private transient Consumer<Boolean>	colorSelectorUpdater	= null;
 	private transient JFrame			editGUI					= null;
+
+	private transient Panel				editPanel				= null;
+
 	private transient PixelDisplay		pd						= null;
 
 	/**
@@ -260,7 +266,23 @@ public class PixelMapping implements Mapping
 	@Override
 	public Panel getEditPanel()
 	{
-		return null;
+		if (editPanel == null)
+		{
+			editPanel = new Panel(new GridLayout(0, 1));
+			JButton csb = new JButton("Select Color");
+			csb.addActionListener(e -> {
+				if (SwingUtilities.getWindowAncestor(editPanel) == null)
+				{ return; }
+				if (colorSelector2 == null)
+				{
+					colorSelector2 = new ColorSelector(c -> color = c, color, true, SwingUtilities.getWindowAncestor(editPanel));
+				}
+				colorSelector2.setLocation(MouseInfo.getPointerInfo().getLocation());
+				colorSelector2.setVisible(true);
+			});
+			editPanel.add(csb);
+		}
+		return editPanel;
 	}
 
 	@Override
@@ -294,8 +316,8 @@ public class PixelMapping implements Mapping
 	@Override
 	public void hideEditPanel()
 	{
-		// TODO Auto-generated method stub
-
+		colorSelector2.dispose();
+		colorSelector2 = null;
 	}
 
 	@Override
