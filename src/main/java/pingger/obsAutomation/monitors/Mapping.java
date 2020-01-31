@@ -68,6 +68,13 @@ public interface Mapping
 	public void hideEditPanel();
 
 	/**
+	 * Checks if this mapping matches at the current moment. Should be fast!
+	 *
+	 * @return <code>true</code> if it matches, <code>false</code> otherwise.
+	 */
+	public boolean matches();
+
+	/**
 	 * Should set the user defined Label
 	 *
 	 * @param label

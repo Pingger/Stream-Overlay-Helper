@@ -21,9 +21,21 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import pingger.obsAutomation.Main;
+import pingger.obsAutomation.util.ColorSelector;
 
+/**
+ * FIXME rework this class to be a bit more than a Proof of Concept!
+ *
+ * @author Pingger
+ *
+ */
 public class OverlayManager implements Monitor
 {
+	/**
+	 * currently used for debugging the {@link ColorSelector} in the
+	 * {@link PixelMapping}
+	 * FIXME -> solve this issue
+	 */
 	public static JFrame		frm					= null;
 	private JButton				btn_editPM;
 	private JButton				btn_faded;
@@ -37,6 +49,9 @@ public class OverlayManager implements Monitor
 	private State				state				= State.TOP_RIGHT;
 	private boolean				stateLocked			= false;
 
+	/**
+	 * Creates a new {@link OverlayManager}
+	 */
 	public OverlayManager()
 	{
 		if (frm != null)
@@ -203,16 +218,48 @@ public class OverlayManager implements Monitor
 		}
 	}
 
+	/**
+	 * The possible Overlay states
+	 *
+	 * @author Pingger
+	 *
+	 */
 	enum State
 	{
+		/**
+		 * The Overlay is at the bottom left
+		 */
 		BOTTOM_LEFT(8, 8, 459, 450, "bl"),
+		/**
+		 * The Overlay is at the bottom right
+		 */
 		BOTTOM_RIGHT(1920 - 459 - 8, 1080 - 450 - 8, 459, 450, "br"),
+		/**
+		 * The Overlay is hidden (moved just of view on the right side of the screen)
+		 */
 		HIDDEN(1920, 8, 459, 450, "hide"),
+		/**
+		 * Special State, used in Mappings to prevent any change (e.g. when more than
+		 * one Mapping needs to match to actually cause a State transition.
+		 */
 		NO_CHANGE(0, 0, 0, 0, "unchanged"),
+		/**
+		 * The Overlay is positioned at the top left.
+		 */
 		TOP_LEFT(8, 240, 459, 450, "left"),
+		/**
+		 * The Overlay is positioned at the top right. (usually the default)
+		 */
 		TOP_RIGHT(1920 - 459 - 8, 240, 459, 450, "right");
 
+		/**
+		 * The area occupied by Overlay in this State
+		 */
 		public final Rectangle	area;
+		/**
+		 * The command to send to the connected WebSockets to perform the State
+		 * transition
+		 */
 		public final String		cmd;
 
 		State(int x, int y, int w, int h, String cmd)

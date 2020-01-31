@@ -3,6 +3,12 @@ package pingger.obsAutomation.monitors;
 import java.awt.PointerInfo;
 import java.awt.Robot;
 
+/**
+ * FIXME still necessary after rework?
+ * 
+ * @author Pingger
+ *
+ */
 public interface Monitor
 {
 

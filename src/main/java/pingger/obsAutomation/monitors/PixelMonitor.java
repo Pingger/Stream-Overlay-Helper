@@ -10,6 +10,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *
+ * FIXME Rework, to properly integrate into {@link PixelMapping}s
+ *
+ * @author Pingger
+ */
 public class PixelMonitor implements Runnable
 {
 	private static HashMap<Monitor, Long>	last					= new HashMap<>();

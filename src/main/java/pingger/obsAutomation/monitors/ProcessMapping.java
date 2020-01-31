@@ -18,6 +18,13 @@ import javax.swing.event.DocumentListener;
 
 import pingger.obsAutomation.monitors.OverlayManager.State;
 
+/**
+ * A {@link ProcessMapping} is a mapping, that matches on currently running
+ * processes
+ *
+ * @author Pingger
+ *
+ */
 public class ProcessMapping implements Mapping
 {
 	private static long				lastUpdate	= 0;
@@ -43,9 +50,12 @@ public class ProcessMapping implements Mapping
 
 	private Color						userColor		= new Color(128, 0, 128);
 
+	/**
+	 * Creates a new ProcessMapping
+	 */
 	public ProcessMapping()
 	{
-		// TODO Auto-generated constructor stub
+		// TODO anything to do here?
 	}
 
 	@Override
@@ -92,15 +102,20 @@ public class ProcessMapping implements Mapping
 			editCommandBox = new JComboBox<>();
 			editCommandBox.setEditable(true);
 			editCommandBox.setSelectedItem(executable);
+			editCommandBox
+					.setToolTipText(
+							"This field can either contain a string, the will match case SENSITIVE or a regex. "
+									+ "The string is interpreted as a regex, when it starts and ends with a '/'."
+					);
 			editCommandBox.addItemListener(e -> {
 				if (!(e.getItem() instanceof String))
 				{
 					String v = (String) e.getItem();
-					if (v.startsWith("::"))
+					if (executable.startsWith("/") && executable.endsWith("/"))
 					{
 						try
 						{
-							Pattern.compile(v.substring(2));
+							Pattern.compile(executable.substring(1, executable.length() - 1));
 							executable = v;
 						}
 						catch (Exception exc)
@@ -165,11 +180,11 @@ public class ProcessMapping implements Mapping
 	public boolean matches()
 	{
 		updateProcesses();
-		if (executable.startsWith("::"))
+		if (executable.startsWith("/") && executable.endsWith("/"))
 		{
 			try
 			{
-				Pattern p = java.util.regex.Pattern.compile(executable.substring(2));
+				Pattern p = Pattern.compile(executable.substring(1, executable.length() - 1));
 				for (String s : processes)
 				{
 					if (p.matcher(s).find())

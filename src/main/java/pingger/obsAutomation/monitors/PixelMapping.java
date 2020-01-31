@@ -49,9 +49,13 @@ import pingger.obsAutomation.monitors.OverlayManager.State;
 import pingger.obsAutomation.util.ColorSelector;
 
 /**
+ * A Pixel Mapping matches onto a single pixel on the Screen and checks if its
+ * color matches the configured color. The color can be matched exact or loosly,
+ * based on the accuracy selected.
  *
+ * FIXME REWORK THIS CLASS
+ * 
  * @author Pingger
- *
  */
 public class PixelMapping implements Mapping
 {
@@ -318,6 +322,13 @@ public class PixelMapping implements Mapping
 	{
 		colorSelector2.dispose();
 		colorSelector2 = null;
+	}
+
+	@Override
+	public boolean matches()
+	{
+		// TODO implement
+		return false;
 	}
 
 	@Override

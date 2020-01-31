@@ -6,6 +6,14 @@ import java.awt.PointerInfo;
 
 import pingger.obsAutomation.Main;
 
+/**
+ *
+ * FIXME Rework to be more than just a proof of conecept.
+ * IDEA Detect Screensaver?
+ * 
+ * @author Pingger
+ *
+ */
 public class MouseMonitor implements Runnable
 {
 	public boolean	keepRunning		= true;
