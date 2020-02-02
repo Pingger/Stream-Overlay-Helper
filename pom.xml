@@ -6,10 +6,22 @@
 	<artifactId>streamOverlayHelper</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Stream Overlay Helper</name>
+	<url>https://github.com/Pingger/Stream-Overlay-Helper</url>
+	<scm>
+		<url>https://github.com/Pingger/Stream-Overlay-Helper</url>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/Pingger/Stream-Overlay-Helper/issues</url>
+		<system>Github Issue Tracker</system>
+	</issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>https://jenkins.iskariot.info/job/Pingger/job/Stream-Overlay-Helper/</url>
+	</ciManagement>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    	<file.encoding>UTF-8</file.encoding>
+		<file.encoding>UTF-8</file.encoding>
 	</properties>
 	<build>
 		<plugins>
