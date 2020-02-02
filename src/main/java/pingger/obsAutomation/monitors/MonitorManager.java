@@ -1,13 +1,11 @@
 package pingger.obsAutomation.monitors;
 
-import java.awt.Color;
-import java.awt.Panel;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import pingger.obsAutomation.monitors.OverlayManager.State;
+import pingger.obsAutomation.monitors.mappings.DefaultMappingFactory;
 import pingger.obsAutomation.monitors.mappings.Mapping;
 import pingger.obsAutomation.monitors.mappings.MappingFactory;
 
@@ -215,112 +213,4 @@ public class MonitorManager
 		return sb.toString();
 	}
 
-	private static class DefaultMappingFactory implements MappingFactory
-	{
-
-		@Override
-		public Mapping createNewMapping()
-		{
-			return new UnknownMapping();
-		}
-
-		@Override
-		public String getGeneralName()
-		{
-			return null;
-		}
-
-		@Override
-		public String getTypeID()
-		{
-			return null;
-		}
-
-		@Override
-		public Mapping loadMapping(String s)
-		{
-			UnknownMapping um = new UnknownMapping();
-			um.data = s;
-			return um;
-		}
-
-		@Override
-		public String storeToString(Mapping m)
-		{
-			if (!(m instanceof UnknownMapping))
-			{ throw new IllegalArgumentException("Can only store \"Unknown Mapping\"s"); }
-			return ((UnknownMapping) m).data;
-		}
-
-		private static class UnknownMapping implements Mapping
-		{
-			public String					data		= "";
-			private final HashSet<Mapping>	subMappings	= new HashSet<>();
-
-			@Override
-			public Color getBackgroundColor()
-			{
-				return new Color(255, 0, 0);
-			}
-
-			@Override
-			public String getDisplayString()
-			{
-				return "UNKNOWN MAPPING TYPE";
-			}
-
-			@Override
-			public Panel getEditPanel()
-			{
-				return new Panel();
-			}
-
-			@Override
-			public String getLabel()
-			{
-				return "UNKNOWN MAPPING TYPE";
-			}
-
-			@Override
-			public Set<Mapping> getSubMappings()
-			{
-				return subMappings;
-			}
-
-			@Override
-			public State getTargetState()
-			{
-				return State.NO_CHANGE;
-			}
-
-			@Override
-			public String getTooltipString()
-			{
-				return "This Mapping Type is unknown and is only loaded in compatiblity mode and CAN NOT BE EDITED!";
-			}
-
-			@Override
-			public String getTypeID()
-			{
-				return null;
-			}
-
-			@Override
-			public void hideEditPanel()
-			{
-
-			}
-
-			@Override
-			public boolean matches()
-			{
-				return false;
-			}
-
-			@Override
-			public void setLabel(String label)
-			{
-			}
-		}
-	}
 }
