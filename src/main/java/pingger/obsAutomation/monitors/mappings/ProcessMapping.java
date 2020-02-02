@@ -28,42 +28,45 @@ import pingger.obsAutomation.util.StringConverters;
  */
 public class ProcessMapping implements Mapping
 {
-	/**
-	 * The {@link MappingFactory} for ProcessMappings
-	 */
+	/** The {@link MappingFactory} for ProcessMappings */
 	public static final ProcessMappingFactory	FACTORY		= new ProcessMappingFactory();
+
+	/** time since last getting all Processes from the OS */
 	private static long							lastUpdate	= 0;
+	/** The Processes that have been retrieved from the OS */
+	private static final Set<String>			processes	= Collections.synchronizedSet(new HashSet<>());
 
-	private static HashSet<String>				processes	= new HashSet<>();
-
+	/**
+	 * Method to Update the Process List
+	 */
 	private static void updateProcesses()
 	{
 		if (lastUpdate + 50 < System.currentTimeMillis())
 		{
 			processes.clear();
 			ProcessHandle.allProcesses().forEach(ph -> ph.info().commandLine().ifPresent(cmd -> processes.add(cmd)));
+			lastUpdate = System.currentTimeMillis();
 		}
 	}
 
+	/** The command or Regular Expression to match. */
+	private String						command			= "<no executable>";
+	/** The Box to edit the command variable */
 	private transient JComboBox<String>	editCommandBox	= null;
+	/** Text Field to edit the Label */
 	private transient JTextField		editLabel		= null;
+	/** The Panel containing the compononents for editing this mapping */
 	private transient Panel				editPanel		= null;
+	/** the Box to change the TargetState */
 	private transient JComboBox<State>	editStateBox	= null;
-	private String						executable		= "<no executable>";
+	/** The user defined Label */
 	private String						label			= "";
+	/** The Sub Mappings */
 	private final Set<Mapping>			subs			= Collections.synchronizedSet(new HashSet<>());
-
+	/** The Target State when this Mapping matches */
 	private State						targetState		= State.NO_CHANGE;
-
+	/** The user defined Color of this Mapping */
 	private Color						userColor		= new Color(128, 0, 128);
-
-	/**
-	 * Creates a new ProcessMapping
-	 */
-	public ProcessMapping()
-	{
-		// TODO anything to do here?
-	}
 
 	@Override
 	public Color getBackgroundColor()
@@ -74,7 +77,7 @@ public class ProcessMapping implements Mapping
 	@Override
 	public String getDisplayString()
 	{
-		return (label.isBlank() ? "" : label + ": ") + executable;
+		return (label.isBlank() ? "" : label + ": ") + command;
 	}
 
 	@Override
@@ -108,7 +111,7 @@ public class ProcessMapping implements Mapping
 			});
 			editCommandBox = new JComboBox<>();
 			editCommandBox.setEditable(true);
-			editCommandBox.setSelectedItem(executable);
+			editCommandBox.setSelectedItem(command);
 			editCommandBox
 					.setToolTipText(
 							"This field can either contain a string, the will match case SENSITIVE or a regex. "
@@ -118,12 +121,12 @@ public class ProcessMapping implements Mapping
 				if (!(e.getItem() instanceof String))
 				{
 					String v = (String) e.getItem();
-					if (executable.startsWith("/") && executable.endsWith("/"))
+					if (command.startsWith("/") && command.endsWith("/"))
 					{
 						try
 						{
-							Pattern.compile(executable.substring(1, executable.length() - 1));
-							executable = v;
+							Pattern.compile(command.substring(1, command.length() - 1));
+							command = v;
 						}
 						catch (Exception exc)
 						{
@@ -132,7 +135,7 @@ public class ProcessMapping implements Mapping
 					}
 					else
 					{
-						executable = v;
+						command = v;
 					}
 				}
 			});
@@ -148,7 +151,7 @@ public class ProcessMapping implements Mapping
 		}
 		updateProcesses();
 		editCommandBox.setModel(new DefaultComboBoxModel<>(processes.toArray(new String[0])));
-		editCommandBox.setSelectedItem(executable);
+		editCommandBox.setSelectedItem(command);
 		editStateBox.setSelectedItem(targetState);
 		editLabel.setText(label);
 		return editPanel;
@@ -194,11 +197,11 @@ public class ProcessMapping implements Mapping
 	public boolean matches()
 	{
 		updateProcesses();
-		if (executable.startsWith("/") && executable.endsWith("/"))
+		if (command.startsWith("/") && command.endsWith("/"))
 		{
 			try
 			{
-				Pattern p = Pattern.compile(executable.substring(1, executable.length() - 1));
+				Pattern p = Pattern.compile(command.substring(1, command.length() - 1));
 				for (String s : processes)
 				{
 					if (p.matcher(s).find())
@@ -214,7 +217,7 @@ public class ProcessMapping implements Mapping
 		{
 			for (String s : processes)
 			{
-				if (s.contains(executable))
+				if (s.contains(command))
 				{ return true; }
 			}
 		}
@@ -261,7 +264,7 @@ public class ProcessMapping implements Mapping
 			String t[] = s.split(",");
 			ProcessMapping pm = new ProcessMapping();
 			pm.label = fromB64(t[0]);
-			pm.executable = fromB64(t[1]);
+			pm.command = fromB64(t[1]);
 			pm.userColor = StringConverters.colorFromString(t[2]);
 			pm.targetState = State.valueOf(t[3]);
 			return pm;
@@ -273,7 +276,7 @@ public class ProcessMapping implements Mapping
 			if (!(um instanceof ProcessMapping))
 			{ throw new IllegalArgumentException("Bad Mapping Type!"); }
 			ProcessMapping m = (ProcessMapping) um;
-			return toB64(m.label) + "," + toB64(m.executable) + "," + m.userColor.getRGB() + "," + m.targetState.name();
+			return toB64(m.label) + "," + toB64(m.command) + "," + m.userColor.getRGB() + "," + m.targetState.name();
 		}
 	}
 }
