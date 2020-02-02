@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors;
+package pingger.obsAutomation.monitors.mappings;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,6 +17,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import pingger.obsAutomation.monitors.OverlayManager.State;
+import pingger.obsAutomation.util.StringConverters;
 
 /**
  * A {@link ProcessMapping} is a mapping, that matches on currently running
@@ -172,11 +173,18 @@ public class ProcessMapping implements Mapping
 	}
 
 	@Override
+	public String getTypeID()
+	{
+		return "Process Mapping";
+	}
+
+	@Override
 	public void hideEditPanel()
 	{
 		// ignore
 	}
 
+	@Override
 	public boolean matches()
 	{
 		updateProcesses();
@@ -220,4 +228,46 @@ public class ProcessMapping implements Mapping
 		}
 	}
 
+	private static class ProcessMappingFactory implements MappingFactory<ProcessMapping>
+	{
+
+		@Override
+		public Mapping createNewMapping()
+		{
+			return new ProcessMapping();
+		}
+
+		@Override
+		public String getGeneralName()
+		{
+			return "Process Mapping";
+		}
+
+		@Override
+		public String getTypeID()
+		{
+			return "ProcM";
+		}
+
+		@Override
+		public ProcessMapping loadMapping(String s)
+		{
+			String t[] = s.split(",");
+			ProcessMapping pm = new ProcessMapping();
+			pm.label = fromB64(t[0]);
+			pm.executable = fromB64(t[1]);
+			pm.userColor = StringConverters.colorFromString(t[2]);
+			pm.targetState = State.valueOf(t[3]);
+			return pm;
+		}
+
+		@Override
+		public String storeToString(Mapping um)
+		{
+			if (!(um instanceof ProcessMapping))
+			{ throw new IllegalArgumentException("Bad Mapping Type!"); }
+			ProcessMapping m = (ProcessMapping) um;
+			return toB64(m.label) + "," + toB64(m.executable) + "," + m.userColor.getRGB() + "," + m.targetState.name();
+		}
+	}
 }

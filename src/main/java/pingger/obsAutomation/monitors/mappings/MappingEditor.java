@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors;
+package pingger.obsAutomation.monitors.mappings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import pingger.obsAutomation.Main;
+import pingger.obsAutomation.monitors.mappings.MappingEditor;
+import pingger.obsAutomation.monitors.mappings.PixelMapping;
 import pingger.obsAutomation.util.ColorSelector;
 
 /**
@@ -224,7 +226,7 @@ public class OverlayManager implements Monitor
 	 * @author Pingger
 	 *
 	 */
-	enum State
+	public enum State
 	{
 		/**
 		 * The Overlay is at the bottom left

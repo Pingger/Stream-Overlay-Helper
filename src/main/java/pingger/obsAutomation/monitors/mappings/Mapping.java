@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors;
+package pingger.obsAutomation.monitors.mappings;
 
 import java.awt.Color;
 import java.awt.Panel;
@@ -81,4 +81,10 @@ public interface Mapping
 	 *            the user defined Label to set
 	 */
 	public void setLabel(String label);
+
+	/**
+	 * @return the TypeID to identify the correct {@link MappingFactory}
+	 */
+	public String getTypeID();
+
 }

@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors;
+package pingger.obsAutomation.monitors.mappings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -45,7 +45,10 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import pingger.obsAutomation.monitors.Monitor;
+import pingger.obsAutomation.monitors.OverlayManager;
 import pingger.obsAutomation.monitors.OverlayManager.State;
+import pingger.obsAutomation.monitors.PixelMonitor;
 import pingger.obsAutomation.util.ColorSelector;
 
 /**
@@ -54,7 +57,7 @@ import pingger.obsAutomation.util.ColorSelector;
  * based on the accuracy selected.
  *
  * FIXME REWORK THIS CLASS
- * 
+ *
  * @author Pingger
  */
 public class PixelMapping implements Mapping
@@ -612,6 +615,12 @@ public class PixelMapping implements Mapping
 	public String toString()
 	{
 		return storeToString(this);
+	}
+
+	@Override
+	public String getTypeID()
+	{
+		return "Pixel Mapping";
 	}
 
 	private synchronized void showColorSelector()

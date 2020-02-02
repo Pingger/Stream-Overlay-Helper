@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import pingger.obsAutomation.monitors.mappings.PixelMapping;
+
 /**
  *
  * FIXME Rework, to properly integrate into {@link PixelMapping}s
