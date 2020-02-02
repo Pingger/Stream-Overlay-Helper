@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors.mappings;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,7 +8,7 @@ import java.util.Set;
 
 import javax.swing.JTextArea;
 
-import pingger.obsAutomation.monitors.OverlayManager.State;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager.State;
 
 /**
  * Used for keeping unknown Mappings and not loose them, like other Programs do.

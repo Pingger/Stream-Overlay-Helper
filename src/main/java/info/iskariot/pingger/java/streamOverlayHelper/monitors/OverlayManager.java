@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -20,10 +20,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import pingger.obsAutomation.Main;
-import pingger.obsAutomation.monitors.mappings.MappingEditor;
-import pingger.obsAutomation.monitors.mappings.PixelMapping;
-import pingger.obsAutomation.util.ColorSelector;
+import info.iskariot.pingger.java.streamOverlayHelper.Main;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.MappingEditor;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.PixelMapping;
+import info.iskariot.pingger.java.streamOverlayHelper.util.ColorSelector;
 
 /**
  * FIXME rework this class to be a bit more than a Proof of Concept!

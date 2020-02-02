@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors.mappings;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import pingger.obsAutomation.monitors.OverlayManager.State;
-import pingger.obsAutomation.util.StringConverters;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager.State;
+import info.iskariot.pingger.java.streamOverlayHelper.util.StringConverters;
 
 /**
  * A {@link ProcessMapping} is a mapping, that matches on currently running

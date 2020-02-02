@@ -1,13 +1,13 @@
-package pingger.obsAutomation.monitors;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import pingger.obsAutomation.monitors.mappings.DefaultMappingFactory;
-import pingger.obsAutomation.monitors.mappings.Mapping;
-import pingger.obsAutomation.monitors.mappings.MappingFactory;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.DefaultMappingFactory;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.Mapping;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.MappingFactory;
 
 /**
  * Manages {@link Monitor}s and {@link Mapping}s

@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors.mappings;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package pingger.obsAutomation.util;
+package info.iskariot.pingger.java.streamOverlayHelper.util;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

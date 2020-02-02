@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors.mappings;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -45,11 +45,11 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import pingger.obsAutomation.monitors.Monitor;
-import pingger.obsAutomation.monitors.OverlayManager;
-import pingger.obsAutomation.monitors.OverlayManager.State;
-import pingger.obsAutomation.monitors.PixelMonitor;
-import pingger.obsAutomation.util.ColorSelector;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.Monitor;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.PixelMonitor;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager.State;
+import info.iskariot.pingger.java.streamOverlayHelper.util.ColorSelector;
 
 /**
  * A Pixel Mapping matches onto a single pixel on the Screen and checks if its

@@ -1,10 +1,10 @@
-package pingger.obsAutomation.monitors.mappings;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings;
 
 import java.awt.Color;
 import java.awt.Panel;
 import java.util.Set;
 
-import pingger.obsAutomation.monitors.OverlayManager.State;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager.State;
 
 /**
  * Interface for Mappings

@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import pingger.obsAutomation.monitors.mappings.PixelMapping;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.PixelMapping;
 
 /**
  *

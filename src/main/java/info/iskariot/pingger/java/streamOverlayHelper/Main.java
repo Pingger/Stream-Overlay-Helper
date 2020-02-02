@@ -1,4 +1,4 @@
-package pingger.obsAutomation;
+package info.iskariot.pingger.java.streamOverlayHelper;
 
 import java.net.InetSocketAddress;
 
@@ -6,9 +6,9 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-import pingger.obsAutomation.monitors.MouseMonitor;
-import pingger.obsAutomation.monitors.PixelMonitor;
-import pingger.obsAutomation.monitors.OverlayManager;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.MouseMonitor;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.PixelMonitor;
 
 public class Main extends WebSocketServer
 {

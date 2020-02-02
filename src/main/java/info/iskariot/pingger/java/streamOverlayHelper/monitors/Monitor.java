@@ -1,4 +1,4 @@
-package pingger.obsAutomation.monitors;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors;
 
 import java.awt.PointerInfo;
 import java.awt.Robot;

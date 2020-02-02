@@ -1,10 +1,10 @@
-package pingger.obsAutomation.monitors;
+package info.iskariot.pingger.java.streamOverlayHelper.monitors;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
 
-import pingger.obsAutomation.Main;
+import info.iskariot.pingger.java.streamOverlayHelper.Main;
 
 /**
  *
