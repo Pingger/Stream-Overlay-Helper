@@ -28,8 +28,13 @@ import pingger.obsAutomation.util.StringConverters;
  */
 public class ProcessMapping implements Mapping
 {
-	private static long				lastUpdate	= 0;
-	private static HashSet<String>	processes	= new HashSet<>();
+	/**
+	 * The {@link MappingFactory} for ProcessMappings
+	 */
+	public static final ProcessMappingFactory	FACTORY		= new ProcessMappingFactory();
+	private static long							lastUpdate	= 0;
+
+	private static HashSet<String>				processes	= new HashSet<>();
 
 	private static void updateProcesses()
 	{
@@ -47,6 +52,7 @@ public class ProcessMapping implements Mapping
 	private String						executable		= "<no executable>";
 	private String						label			= "";
 	private final Set<Mapping>			subs			= Collections.synchronizedSet(new HashSet<>());
+
 	private State						targetState		= State.NO_CHANGE;
 
 	private Color						userColor		= new Color(128, 0, 128);
@@ -228,7 +234,7 @@ public class ProcessMapping implements Mapping
 		}
 	}
 
-	private static class ProcessMappingFactory implements MappingFactory<ProcessMapping>
+	private static class ProcessMappingFactory implements MappingFactory
 	{
 
 		@Override

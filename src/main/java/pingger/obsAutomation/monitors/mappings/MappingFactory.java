@@ -7,11 +7,9 @@ import java.util.Base64;
  * A Factory for {@link Mapping}s
  *
  * @author Pingger
- * @param <T>
- *            the Type of {@link Mapping} this {@link MappingFactory} is for.
  *
  */
-public interface MappingFactory<T extends Mapping>
+public interface MappingFactory
 {
 	/**
 	 * @return a newly created Mapping with default Values
@@ -34,7 +32,7 @@ public interface MappingFactory<T extends Mapping>
 	 *            submappings).
 	 * @return the resulting Mapping (without its submappings)
 	 */
-	public T loadMapping(String s);
+	public Mapping loadMapping(String s);
 
 	/**
 	 * Should return a String representation of this Mapping, that can be restored
