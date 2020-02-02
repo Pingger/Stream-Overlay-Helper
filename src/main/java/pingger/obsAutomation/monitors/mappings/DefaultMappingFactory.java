@@ -55,12 +55,41 @@ public class DefaultMappingFactory implements MappingFactory
 	private static class UnknownMapping implements Mapping
 	{
 		public final String				data;
+
 		private transient Panel			editPanel	= null;
+
 		private final HashSet<Mapping>	subMappings	= new HashSet<>();
 
 		public UnknownMapping(String d)
 		{
 			data = d;
+		}
+
+		@Override
+		public boolean equals(Object obj)
+		{
+			if (this == obj)
+			{ return true; }
+			if (obj == null)
+			{ return false; }
+			if (getClass() != obj.getClass())
+			{ return false; }
+			UnknownMapping other = (UnknownMapping) obj;
+			if (data == null)
+			{
+				if (other.data != null)
+				{ return false; }
+			}
+			else if (!data.equals(other.data))
+			{ return false; }
+			if (subMappings == null)
+			{
+				if (other.subMappings != null)
+				{ return false; }
+			}
+			else if (!subMappings.equals(other.subMappings))
+			{ return false; }
+			return true;
 		}
 
 		@Override
@@ -133,6 +162,16 @@ public class DefaultMappingFactory implements MappingFactory
 		}
 
 		@Override
+		public int hashCode()
+		{
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (data == null ? 0 : data.hashCode());
+			result = prime * result + (subMappings == null ? 0 : subMappings.hashCode());
+			return result;
+		}
+
+		@Override
 		public void hideEditPanel()
 		{
 
@@ -147,6 +186,7 @@ public class DefaultMappingFactory implements MappingFactory
 		@Override
 		public void setLabel(String label)
 		{
+
 		}
 	}
 }
