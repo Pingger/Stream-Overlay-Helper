@@ -19,7 +19,7 @@ node {
     }
     stage('Results') {
         junit allowEmptyResults: true, testResults: '**/target/surefire-reports/TEST-*.xml'
-        recordIssues healthy: 1, unhealthy: 10, tools: [java(), javaDoc(), mavenConsole()]
+        recordIssues healthy: 1, unhealthy: 10, qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]], tools: [java(), javaDoc(), mavenConsole()]
         archiveArtifacts allowEmptyArchive: true, artifacts: 'target/*.jar', fingerprint: true
     }
 }
