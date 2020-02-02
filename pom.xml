@@ -28,7 +28,7 @@
 						<arg>-Xdoclint:reference</arg>
 						<arg>-Xdoclint:syntax</arg>
 						<arg>-Xmaxerrs 10000</arg>
-						<arg>-Xmaxerrs 10000</arg>
+						<arg>-Xmaxwarns 10000</arg>
 					</compilerArgs>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
