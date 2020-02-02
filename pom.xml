@@ -5,13 +5,34 @@
 	<groupId>info.iskariot.pingger.java</groupId>
 	<artifactId>streamOverlayHelper</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>OBS Automation</name>
+	<name>Stream Overlay Helper</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    	<file.encoding>UTF-8</file.encoding>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
+					<compilerArgs>
+						<arg>-Xlint</arg>
+						<arg>-Xdoclint</arg>
+						<arg>-Xdoclint:accessibility</arg>
+						<arg>-Xdoclint:html</arg>
+						<arg>-Xdoclint:missing/public</arg>
+						<arg>-Xdoclint:missing/package</arg>
+						<arg>-Xdoclint:missing/protected</arg>
+						<arg>-Xdoclint:reference</arg>
+						<arg>-Xdoclint:syntax</arg>
+						<arg>-Xmaxerrs 10000</arg>
+						<arg>-Xmaxerrs 10000</arg>
+					</compilerArgs>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+					<fork>true</fork>
 					<release>11</release>
 				</configuration>
 			</plugin>

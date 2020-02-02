@@ -47,8 +47,8 @@ import javax.swing.event.DocumentListener;
 
 import info.iskariot.pingger.java.streamOverlayHelper.monitors.Monitor;
 import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager;
-import info.iskariot.pingger.java.streamOverlayHelper.monitors.PixelMonitor;
 import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager.State;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.PixelMonitor;
 import info.iskariot.pingger.java.streamOverlayHelper.util.ColorSelector;
 
 /**
@@ -318,6 +318,12 @@ public class PixelMapping implements Mapping
 				+ color.getRed() + "," + color.getGreen() + ","
 				+ color.getBlue() + ");\">" + color.getRed() + "," + color.getGreen() + "," +
 				color.getBlue() + "</span><br>Accuracy: " + (int) (accuracy * 255) + "</body></html>";
+	}
+
+	@Override
+	public String getTypeID()
+	{
+		return "Pixel Mapping";
 	}
 
 	@Override
@@ -615,12 +621,6 @@ public class PixelMapping implements Mapping
 	public String toString()
 	{
 		return storeToString(this);
-	}
-
-	@Override
-	public String getTypeID()
-	{
-		return "Pixel Mapping";
 	}
 
 	private synchronized void showColorSelector()
