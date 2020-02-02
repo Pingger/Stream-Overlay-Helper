@@ -36,7 +36,7 @@ public class OverlayManager implements Monitor
 	/**
 	 * currently used for debugging the {@link ColorSelector} in the
 	 * {@link PixelMapping}
-	 * FIXME -> solve this issue
+	 * FIXME -&gt; solve this issue
 	 */
 	public static JFrame		frm					= null;
 	private JButton				btn_editPM;

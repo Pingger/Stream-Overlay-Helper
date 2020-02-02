@@ -382,18 +382,38 @@ public class ColorSelector extends Window
 
 	private enum ColorComponent
 	{
+		/** Alpha RGBA Component */
 		ALPHA(0.0, 255.0, false),
+		/** Blue RGBA Component */
 		BLUE(0.0, 255.0, false),
+		/** Brighness HSB Component */
 		BRIGHTNESS(0.0, 100.0, true),
+		/** Green RGBA Component */
 		GREEN(0.0, 255.0, false),
+		/** HUE HSB Component */
 		HUE(0.0, 360.0, false),
+		/** Red RGBA Component */
 		RED(0.0, 255.0, false),
+		/** Saturation HSB Component */
 		SATURATION(0.0, 100.0, true);
 
-		public final boolean	flt; // defines if the spinner increments by 1 or 0.1
-		public final Number		lowerBound; // lower Bound for Slider and Spinner (also for VisualComponentSelector)
-		public final Number		upperBound; // upper Bound for Slider and Spinner (also for VisualComponentSelector)
+		/** defines if the spinner increments by 1 or 0.1 */
+		public final boolean	flt;
+		/** lower Bound for Slider and Spinner (also for VisualComponentSelector) */
+		public final Number		lowerBound;
+		/** upper Bound for Slider and Spinner (also for VisualComponentSelector) */
+		public final Number		upperBound;
 
+		/**
+		 * Specifies a Color Component
+		 *
+		 * @param lb
+		 *            lower Bound for value
+		 * @param ub
+		 *            upper Bound for value
+		 * @param fltValue
+		 *            float?
+		 */
 		ColorComponent(double lb, double ub, boolean fltValue)
 		{
 			// casts prevent later issues
@@ -413,6 +433,9 @@ public class ColorSelector extends Window
 	{
 		private static final long serialVersionUID = 8326031548169038381L;
 
+		/**
+		 * Creates a new {@link ColorDisplay}
+		 */
 		public ColorDisplay()
 		{
 			setDoubleBuffered(true);

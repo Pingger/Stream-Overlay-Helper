@@ -25,6 +25,7 @@
 						<arg>-Xdoclint:missing/public</arg>
 						<arg>-Xdoclint:missing/package</arg>
 						<arg>-Xdoclint:missing/protected</arg>
+						<arg>-Xdoclint:-missing/private</arg>
 						<arg>-Xdoclint:reference</arg>
 						<arg>-Xdoclint:syntax</arg>
 						<arg>-Xmaxerrs</arg>
