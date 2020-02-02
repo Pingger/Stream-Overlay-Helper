@@ -8,6 +8,7 @@ import java.util.Set;
 import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.DefaultMappingFactory;
 import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.Mapping;
 import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.MappingFactory;
+import info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings.ProcessMapping;
 
 /**
  * Manages {@link Monitor}s and {@link Mapping}s
@@ -31,6 +32,11 @@ public class MonitorManager
 	 * MappingFactories by {@link Mapping} type
 	 */
 	protected static final HashMap<Class<? extends Mapping>, MappingFactory>	factories2				= new HashMap<>();
+
+	static
+	{
+		addMappingFactory(ProcessMapping.FACTORY);
+	}
 
 	/**
 	 * Convenience Method for {@link #addMappingFactory(String, MappingFactory)},
