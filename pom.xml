@@ -32,7 +32,6 @@
 					</compilerArgs>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
-					<fork>true</fork>
 					<release>11</release>
 				</configuration>
 			</plugin>
