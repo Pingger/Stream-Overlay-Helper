@@ -2,7 +2,10 @@ package info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.MouseInfo;
 import java.awt.Panel;
 import java.awt.Window;
@@ -11,12 +14,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
@@ -28,7 +33,7 @@ import javax.swing.WindowConstants;
  */
 public class MappingEditor extends JFrame
 {
-	private static final int	GAPS				= 8;
+	private static final int	GAPS				= 4;
 	private static final long	serialVersionUID	= -7638999405661658059L;
 
 	private static JButton createButton(String label, ActionListener al, Color backgroundColor)
@@ -42,14 +47,15 @@ public class MappingEditor extends JFrame
 		return btn;
 	}
 
-	private Panel						east		= new Panel(new BorderLayout(GAPS, GAPS));
-	private Panel						eastTop		= new Panel(new GridLayout(0, 1, GAPS, GAPS));
-	private final Panel					editPanel	= new Panel(new BorderLayout());
-	private final WindowListener		listener	= new WindowListener();
+	private final Panel					editPanel		= new Panel(new BorderLayout());
+	private final WindowListener		listener		= new WindowListener();
+	private HashMap<Mapping, JPanel>	listLabelPanels	= new HashMap<>();
+	private HashMap<Mapping, JLabel>	listLabels		= new HashMap<>();
 	private Mapping						m;
-	private Panel						main		= new Panel(new BorderLayout(GAPS, GAPS));
-	private final LinkedList<Mapping>	parents		= new LinkedList<>();
-	private final JList<Mapping>		subs		= new JList<>();
+	private JPanel						main			= new JPanel(new GridBagLayout(), true);
+	private final LinkedList<Mapping>	parents			= new LinkedList<>();
+
+	private final JList<Mapping>		subs			= new JList<>();
 
 	/**
 	 * @param m
@@ -63,6 +69,7 @@ public class MappingEditor extends JFrame
 		setupUI();
 		updateUI();
 		pack();
+		setSize(800, 600);
 		setVisible(true);
 	}
 
@@ -111,23 +118,60 @@ public class MappingEditor extends JFrame
 	private void setupUI()
 	{
 		setContentPane(main);
-		main.add(subs, BorderLayout.CENTER);
-		main.add(east, BorderLayout.EAST);
-		east.add(eastTop, BorderLayout.NORTH);
-		eastTop.add(createButton("Edit Parent", e -> editParent(), new Color(255, 255, 128, 255)));
-		eastTop.add(createButton("Add Mapping", e -> addSubMapping(), new Color(128, 255, 128, 255)));
-		eastTop.add(createButton("Edit Mapping", e -> editSubMapping(), new Color(255, 255, 128, 255)));
-		eastTop.add(createButton("Remove Mapping", e -> removeSubMapping(), new Color(255, 128, 128, 255)));
-		eastTop.add(createButton("Refresh UI", e -> updateUI(), new Color(128, 128, 255, 255)));
-		eastTop.add(createButton("Close", e -> listener.windowClosing(null), new Color(64, 64, 64, 255)));
-
-		east.add(editPanel, BorderLayout.SOUTH);
-
+		GridBagConstraints gbs = new GridBagConstraints();
+		gbs.weightx = 0;
+		gbs.weighty = 0;
+		gbs.insets = new Insets(GAPS, GAPS, GAPS, GAPS);
+		gbs.fill = GridBagConstraints.BOTH;
+		gbs.gridy = 0;
+		gbs.gridwidth = 1;
+		gbs.gridheight = 1;
+		gbs.gridx = 0;
+		main.add(createButton("Edit Parent", e -> editParent(), new Color(192, 192, 192, 255)), gbs);
+		gbs.gridx = 3;
+		main.add(createButton("Close", e -> listener.windowClosing(null), new Color(192, 192, 192, 255)), gbs);
+		gbs.gridx = 0;
+		gbs.gridy++;
+		gbs.weightx = 0;
+		main.add(createButton("Add Mapping", e -> addSubMapping(), new Color(128, 255, 128, 255)), gbs);
+		gbs.weightx = 0.5;
+		gbs.gridx++;
+		main.add(createButton("Edit Mapping", e -> editSubMapping(), new Color(255, 255, 128, 255)), gbs);
+		gbs.weightx = 0;
+		gbs.gridx++;
+		main.add(createButton("Remove Mapping", e -> removeSubMapping(), new Color(255, 128, 128, 255)), gbs);
+		gbs.gridx++;
+		main.add(createButton("Refresh UI", e -> updateUI(), new Color(128, 128, 255, 255)), gbs);
+		gbs.gridx = 0;
+		gbs.gridy++;
+		gbs.gridwidth = 3;
+		gbs.weightx = 0.75;
+		gbs.weighty = 0.9;
+		main.add(subs, gbs);
+		gbs.weightx = 0.25;
+		gbs.gridx += 3;
+		gbs.gridwidth = 1;
+		//		JPanel editPanelBox = new JPanel();
+		//		editPanelBox.setLayout(new BoxLayout(editPanelBox, BoxLayout.Y_AXIS));
+		//		editPanel.setMaximumSize(new Dimension(256, Integer.MAX_VALUE));
+		//		editPanelBox.setMaximumSize(new Dimension(256, Integer.MAX_VALUE));
+		//		editPanelBox.add(editPanel);
+		main.add(editPanel, gbs);
 		subs.setCellRenderer((jl, ma, i, sel, foc) -> {
-			JLabel lbl = new JLabel((sel ? ">>>" : "") + ma.getDisplayString(), SwingConstants.LEFT);
-			lbl.setBackground(ma.getBackgroundColor());
-			lbl.setToolTipText(ma.getTooltipString());
-			return lbl;
+			if (!listLabelPanels.containsKey(ma))
+			{
+				JPanel pan = new JPanel(new BorderLayout(), true);
+				JLabel lbl = new JLabel("", SwingConstants.LEFT);
+				pan.add(lbl, BorderLayout.CENTER);
+				listLabelPanels.put(ma, pan);
+				listLabels.put(ma, lbl);
+			}
+			JLabel l = listLabels.get(ma);
+			JPanel p = listLabelPanels.get(ma);
+			l.setText((sel ? "  " : "") + ma.getDisplayString() + (sel ? " <<< " : ""));
+			p.setBackground(ma.getBackgroundColor());
+			l.setToolTipText(ma.getTooltipString());
+			return l;
 		});
 	}
 
@@ -143,12 +187,13 @@ public class MappingEditor extends JFrame
 		Panel ep = m.getEditPanel();
 		if (ep != null)
 		{
-			editPanel.add(m.getEditPanel(), BorderLayout.CENTER);
+			editPanel.add(m.getEditPanel(), BorderLayout.NORTH);
 		}
 		else
 		{
 			m.hideEditPanel();
 		}
+		main.revalidate();
 	}
 
 	/**

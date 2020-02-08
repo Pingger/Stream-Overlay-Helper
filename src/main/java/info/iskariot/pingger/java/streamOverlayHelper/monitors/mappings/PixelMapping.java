@@ -329,8 +329,11 @@ public class PixelMapping implements Mapping
 	@Override
 	public void hideEditPanel()
 	{
-		colorSelector2.dispose();
-		colorSelector2 = null;
+		if (colorSelector2 != null)
+		{
+			colorSelector2.dispose();
+			colorSelector2 = null;
+		}
 	}
 
 	@Override

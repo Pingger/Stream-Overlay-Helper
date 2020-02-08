@@ -231,7 +231,7 @@ public class OverlayManager implements Monitor
 		/**
 		 * The Overlay is at the bottom left
 		 */
-		BOTTOM_LEFT(8, 8, 459, 450, "bl"),
+		BOTTOM_LEFT(8, 1080 - 450 - 8, 459, 450, "bl"),
 		/**
 		 * The Overlay is at the bottom right
 		 */

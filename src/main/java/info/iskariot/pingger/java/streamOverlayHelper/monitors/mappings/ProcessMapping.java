@@ -1,22 +1,30 @@
 package info.iskariot.pingger.java.streamOverlayHelper.monitors.mappings;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Panel;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import info.iskariot.pingger.java.streamOverlayHelper.monitors.OverlayManager.State;
+import info.iskariot.pingger.java.streamOverlayHelper.util.ColorSelector;
 import info.iskariot.pingger.java.streamOverlayHelper.util.StringConverters;
 
 /**
@@ -36,6 +44,27 @@ public class ProcessMapping implements Mapping
 	/** The Processes that have been retrieved from the OS */
 	private static final Set<String>			processes	= Collections.synchronizedSet(new HashSet<>());
 
+	private static Component box(Component c, Dimension d)
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		p.setMaximumSize(d);
+		c.setMaximumSize(d);
+		p.add(c);
+
+		return p;
+	}
+
+	private static Component box(Component c, int width)
+	{
+		return box(c, width, Integer.MAX_VALUE);
+	}
+
+	private static Component box(Component c, int width, int height)
+	{
+		return box(c, new Dimension(width, height));
+	}
+
 	/**
 	 * Method to Update the Process List
 	 */
@@ -44,11 +73,25 @@ public class ProcessMapping implements Mapping
 		if (lastUpdate + 50 < System.currentTimeMillis())
 		{
 			processes.clear();
-			ProcessHandle.allProcesses().forEach(ph -> ph.info().commandLine().ifPresent(cmd -> processes.add(cmd)));
+			ProcessHandle
+					.allProcesses()
+					.forEach(
+							ph -> ph
+									.info()
+									.command()
+									.ifPresent(
+											cmd -> processes
+													.add(cmd + " " + StringConverters.concatStrings(ph.info().arguments().orElseGet(() -> new String[]
+													{
+															"[NO ARGS]"
+													})))
+									)
+					);
 			lastUpdate = System.currentTimeMillis();
 		}
 	}
 
+	private transient ColorSelector		colorSelector	= null;
 	/** The command or Regular Expression to match. */
 	private String						command			= "<no executable>";
 	/** The Box to edit the command variable */
@@ -63,8 +106,10 @@ public class ProcessMapping implements Mapping
 	private String						label			= "";
 	/** The Sub Mappings */
 	private final Set<Mapping>			subs			= Collections.synchronizedSet(new HashSet<>());
+
 	/** The Target State when this Mapping matches */
 	private State						targetState		= State.NO_CHANGE;
+
 	/** The user defined Color of this Mapping */
 	private Color						userColor		= new Color(128, 0, 128);
 
@@ -85,8 +130,11 @@ public class ProcessMapping implements Mapping
 	{
 		if (editPanel == null)
 		{
-			Panel ep = new Panel(new GridLayout(0, 2, 8, 8));
-			ep.setPreferredSize(new Dimension(256, 0));
+			Panel ep = new Panel(new GridBagLayout());
+			GridBagConstraints gbs = new GridBagConstraints(
+					0, 0, 1, 1, 0, 0, GridBagConstraints.NORTHEAST, GridBagConstraints.HORIZONTAL, new Insets(4, 4, 4, 4), 0, 0
+			);
+			//ep.setPreferredSize(new Dimension(256, -1));
 			editLabel = new JTextField();
 			editLabel.getDocument().addDocumentListener(new DocumentListener()
 			{
@@ -139,14 +187,41 @@ public class ProcessMapping implements Mapping
 					}
 				}
 			});
+			//JPanel commandBoxBox = new JPanel();
+			//commandBoxBox.setLayout(new BoxLayout(commandBoxBox, BoxLayout.X_AXIS));
+			//editCommandBox.setMaximumSize(new Dimension(192, 64));
+			//	commandBoxBox.add(editCommandBox);
+			JButton openColorSelector = new JButton("Change Color");
+			openColorSelector.addActionListener(e -> {
+				if (colorSelector == null)
+				{
+					colorSelector = new ColorSelector(c -> userColor = c, userColor, false, SwingUtilities.getWindowAncestor(openColorSelector));
+				}
+				colorSelector.setLocation(openColorSelector.getLocationOnScreen());
+				colorSelector.setAlwaysOnTop(true);
+				colorSelector.setVisible(true);
+				colorSelector.setVisible(true); // Also take focus
+			});
 			editStateBox = new JComboBox<>(State.values());
 			editStateBox.addItemListener(e -> targetState = (State) editStateBox.getSelectedItem());
-			editPanel.add(new JLabel("Label: "));
-			editPanel.add(editLabel);
-			editPanel.add(new JLabel("Command: "));
-			editPanel.add(editCommandBox);
-			editPanel.add(new JLabel("Target State: "));
-			editPanel.add(editStateBox);
+			ep.add(new JLabel("Label: "), gbs);
+			gbs.gridx = 1;
+			ep.add(box(editLabel, 192), gbs);
+			gbs.gridy++;
+			gbs.gridx = 0;
+			ep.add(new JLabel("Command: "), gbs);
+			gbs.gridx = 1;
+			ep.add(box(editCommandBox, 192), gbs);
+			gbs.gridy++;
+			gbs.gridx = 0;
+			ep.add(new JLabel("Target State: "), gbs);
+			gbs.gridx = 1;
+			ep.add(box(editStateBox, 192), gbs);
+			gbs.gridy++;
+			gbs.gridx = 0;
+			ep.add(new JLabel(" "), gbs);
+			gbs.gridx = 1;
+			ep.add(box(openColorSelector, 192), gbs);
 			editPanel = ep;
 		}
 		updateProcesses();
@@ -190,7 +265,11 @@ public class ProcessMapping implements Mapping
 	@Override
 	public void hideEditPanel()
 	{
-		// ignore
+		if (colorSelector != null)
+		{
+			colorSelector.dispose();
+			colorSelector = null;
+		}
 	}
 
 	@Override
